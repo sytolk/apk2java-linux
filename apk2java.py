@@ -60,9 +60,9 @@ def apktool(smali):
   print ("*********************************************")
   if apk_file != '':
     if smali == True:
-      call(home+'/tool/apktool_200rc3.jar d '+apk_file+' -o '+outdir+project_name+' -f',shell=True)
+      call('java -jar '+home+'/tool/apktool_200rc3.jar d '+apk_file+' -o '+outdir+project_name+' -f',shell=True)
     else:
-      call(home+'/tool/apktool_200rc3.jar d '+apk_file+' -o '+outdir+project_name+' -sf',shell=True)
+      call('java -jar '+home+'/tool/apktool_200rc3.jar d '+apk_file+' -o '+outdir+project_name+' -sf',shell=True)
       os.system('mv %s %s' % (outdir+project_name+'/classes.dex', outdir+project_name+'/original/'))
   print ('Done')
 
@@ -72,7 +72,7 @@ def dex2jar():
   print ("*********************************************")
   if apk_file != '':
     call(home+'/tool/dex2jar-0.0.9.15/d2j-dex2jar.sh -f -o '+outdir+project_name+'.jar '+apk_file, shell=True)
-    call(home+'/tool/dex2jar-0.0.9.15/d2j-asm-verify.sh '+outdir+project_name+'.jar',shell=True)
+    # call(home+'/tool/dex2jar-0.0.9.15/d2j-asm-verify.sh '+outdir+project_name+'.jar',shell=True)
     print ('Done')
 
 def procyon():
@@ -80,7 +80,7 @@ def procyon():
   print ("**        Decompiling class files          **")
   print ("*********************************************")
   if apk_file != '':
-    call(home+'/tool/procyon-decompiler-0528.jar -jar '+outdir+project_name+'.jar -o '+outdir+project_name+'/src/',shell=True)
+    call('java -jar '+home+'/tool/procyon-decompiler-0528.jar -jar '+outdir+project_name+'.jar -o '+outdir+project_name+'/src/',shell=True)
     print ('Done')
 
 def apktool_build():
@@ -107,7 +107,7 @@ def jasmin_build():
   print ("*********************************************")
   if apk_folder != '':
     call(home+'/tool/dex2jar-0.0.9.15/d2j-jasmin2jar.sh -f -o '+outdir+project_name+'-new.jar '+outdir+project_name+'/jasmin',shell=True)
-    call(home+'/tool/dex2jar-0.0.9.15/d2j-asm-verify.sh '+outdir+project_name+'-new.jar',shell=True)
+    # call(home+'/tool/dex2jar-0.0.9.15/d2j-asm-verify.sh '+outdir+project_name+'-new.jar',shell=True)
     call(home+'/tool/dex2jar-0.0.9.15/d2j-jar2dex.sh -f -o '+outdir+project_name+'/classes.dex '+outdir+project_name+'-new.jar',shell=True)
     call('zip -r '+outdir+project_name+'-new.apk -j '+outdir+project_name+'/classes.dex',shell=True)
     global sign_file
